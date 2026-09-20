@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8086 Port-Mapped I/O Learning Tool | EC2201 Microprocessor & I/O Interfacing</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="cpu-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+            <rect x="9" y="9" width="6" height="6"></rect>
+            <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">8086 Port-Mapped I/O</span>
+          <span class="brand-subtitle">EC2201 • Unit V Interfacing</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="mainNav">
+        <button class="nav-item active" data-tab="home">Home</button>
+        <button class="nav-item" data-tab="simulator">Simulator</button>
+        <button class="nav-item" data-tab="portmap">Port Map</button>
+        <button class="nav-item" data-tab="devices">Virtual Devices</button>
+        <button class="nav-item" data-tab="programs">Sample Programs</button>
+        <button class="nav-item" data-tab="trace">I/O Trace</button>
+        <button class="nav-item" data-tab="testcases">Test Cases</button>
+        <button class="nav-item" data-tab="logic">Logic / Truth Table</button>
+        <button class="nav-item" data-tab="results">Results</button>
+        <button class="nav-item" data-tab="docs">Documentation</button>
+        <button class="nav-item" data-tab="about">About Project</button>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggleBtn" class="btn-icon" title="Toggle Theme">
+          <span class="theme-icon">☀️</span>
+        </button>
+        <button id="quickDemoBtn" class="btn btn-warning btn-sm pulse">
+          <span class="icon">▶</span> Demo Mode
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="content-container">
+
+    <!-- ==================== 1. HOME TAB ==================== -->
+    <section id="tab-home" class="tab-pane active">
+      <div class="hero-banner">
+        <div class="hero-badge">COLLEGE LABORATORY SIMULATION TOOLKIT</div>
+        <h1 class="hero-title">8086 Port-Mapped I/O Learning Tool</h1>
+        <p class="hero-subtitle">Interactive Software Simulation for 8086 Port-Mapped (Isolated) I/O Operations, Bus Control Signals, and Peripheral Interfacing</p>
+        
+        <div class="student-meta-card">
+          <div class="meta-item">
+            <span class="meta-label">Student Name:</span>
+            <span class="meta-val highlight">HARIHARAN MUTHU M</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Section:</span>
+            <span class="meta-val">A</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Subject Code:</span>
+            <span class="meta-val">EC2201 – Microprocessor & I/O Interfacing</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Unit:</span>
+            <span class="meta-val">Unit V – 8086 Microprocessor and I/O Interfacing</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Registered On:</span>
+            <span class="meta-val">08 Sept 2026</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <button class="btn btn-primary btn-lg" onclick="switchTab('simulator')">
+            <span class="icon">⚡</span> Launch Simulator
+          </button>
+          <button class="btn btn-outline btn-lg" onclick="startGuidedDemo()">
+            <span class="icon">🎓</span> 3–5 Min College Presentation Demo
+          </button>
+          <button class="btn btn-secondary btn-lg" onclick="switchTab('testcases')">
+            <span class="icon">🧪</span> Run Test Cases (16)
+          </button>
+        </div>
+      </div>
+
+      <!-- Project Objective Section -->
+      <div class="card card-accented mt-4">
+        <div class="card-header">
+          <div class="header-icon-box">🎯</div>
+          <div>
+            <h3>Project Objective</h3>
+            <p class="text-muted">Educational Scope and Purpose</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <blockquote class="styled-quote">
+            “To provide an interactive and reproducible software simulation for understanding 8086 port-mapped I/O operations using virtual devices, IN/OUT instructions, port mapping and execution tracing.”
+          </blockquote>
+          <p class="objective-desc">
+            In physical 8086 microcomputer systems, input/output interfacing requires specialized hardware logic, address decoders (74LS138), bus transceivers (74LS245), and bus control signal decoding (<span class="code-pill">M/~IO = 0</span>, <span class="code-pill">~RD = 0</span>, <span class="code-pill">~WR = 0</span>). This educational simulation allows students to interact with, trace, and debug 8086 isolated I/O operations without the safety and hardware constraint barriers of physical ICs.
+          </p>
+        </div>
+      </div>
+
+      <!-- Real-World Problem & Solution Grid -->
+      <div class="grid-2 mt-4">
+        <div class="card">
+          <div class="card-header">
+            <div class="header-icon-box text-danger">⚠️</div>
+            <div>
+              <h3>Real-World Problem</h3>
+              <p class="text-muted">Why Microprocessor I/O is Difficult to Learn</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Students frequently learn 8086 I/O interfacing purely theoretically. Physical breadboard interfacing with DIP switches, 8255 PPIs, and 74LS series ICs presents major hurdles:</p>
+            <ul class="bullet-list">
+              <li>Inability to pause or observe sub-microsecond T-state bus transitions</li>
+              <li>Risk of chip burnout from incorrect wiring or address bus conflicts</li>
+              <li>Lack of immediate visual feedback during accumulator data latching</li>
+              <li>Difficulty visualizing how the 8086 distinguishes memory addresses from 64KB I/O port addresses using control pin <span class="code-pill">M/~IO</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="header-icon-box text-success">💡</div>
+            <div>
+              <h3>Proposed Software Solution</h3>
+              <p class="text-muted">Reproducible Virtual Engineering Platform</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>This software tool solves the pedagogical challenge by implementing a complete virtual 8086 I/O subsystem with:</p>
+            <ul class="bullet-list">
+              <li>Configurable port address map with 8 authentic virtual peripherals</li>
+              <li>Precise 8086 <span class="code-pill">IN</span> and <span class="code-pill">OUT</span> bus cycle simulation with T1-T4 state breakdown</li>
+              <li>Real-time CPU accumulator (AL, AH, AX) and Status Flags visualizer</li>
+              <li>Dynamic error/fault injection handling (unmapped ports, direction violations)</li>
+              <li>Comprehensive 16-point automated test suite with 100% reproducible results</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Features Cards -->
+      <h2 class="section-title mt-5">Key Tool Capabilities</h2>
+      <div class="grid-3 mt-3">
+        <div class="feature-card">
+          <div class="feat-icon">🗺️</div>
+          <h4>Port Mapping</h4>
+          <p>Configurable 8086 I/O address decoding map for ports 00H–FFH with direction control and peripheral bindings.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">⚡</div>
+          <h4>IN / OUT Operations</h4>
+          <p>Full 8086 instruction emulation: <span class="code-pill">IN AL, port</span>, <span class="code-pill">OUT port, AL</span>, 16-bit word transfers, and <span class="code-pill">MOV</span>.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🔌</div>
+          <h4>8 Virtual Peripherals</h4>
+          <p>Interactive DIP switches, 8-channel LEDs, 7-Segment display, ADC sensor, 4x4 matrix keypad, piezo buzzer, motor drive, and status flags.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">📜</div>
+          <h4>Sample Programs</h4>
+          <p>Preloaded 8086 assembly routines for sensor monitoring, alarm annunciation, keypad scancode display, and motor PWM control.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🔍</div>
+          <h4>Step-by-Step I/O Trace</h4>
+          <p>Complete execution history with bus signals, registers before/after, device states, and downloadable CSV audit log.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🛡️</div>
+          <h4>Fault Detection</h4>
+          <p>Automatic detection of unmapped ports (High-Z), bus contention, direction mismatches, and syntax operand inversion errors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. SIMULATOR TAB ==================== -->
+    <section id="tab-simulator" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 Educational Simulator</h2>
+          <p class="text-muted">Interactive Assembly Execution, CPU Accumulator Tracking, and Bus Signal Inspection</p>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(1)">Load Prog 1</button>
+          <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(2)">Load Prog 2</button>
+          <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(3)">Load Prog 3</button>
+          <button class="btn btn-danger btn-sm" onclick="resetAllSimulation()">Reset All</button>
+        </div>
+      </div>
+
+      <!-- 3-Column Simulator Grid -->
+      <div class="simulator-layout mt-3">
+        
+        <!-- LEFT: Port & Device Quick Panel -->
+        <div class="sim-panel sim-left">
+          <div class="panel-header">
+            <h3>I/O Port Map & Devices</h3>
+            <span class="badge badge-info">8 Ports Active</span>
+          </div>
+          <div class="quick-ports-list" id="simQuickPorts">
+            <!-- Populated via JavaScript -->
+          </div>
+          <div class="quick-device-widget mt-3">
+            <h4>Quick Device Control</h4>
+            <div class="device-quick-card" id="quickDeviceBox">
+              <div class="text-muted small">Select an I/O device from Port Map or Virtual Devices to view real-time state.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER: Code Editor & Execution Controls -->
+        <div class="sim-panel sim-center">
+          <div class="panel-header">
+            <h3>Program Editor</h3>
+            <div class="editor-meta">
+              <span class="editor-mode">8086 Assembly</span>
+              <span id="progLineCount" class="badge">2 Lines</span>
+            </div>
+          </div>
+
+          <div class="editor-wrapper">
+            <textarea id="asmCodeEditor" spellcheck="false" placeholder="; Enter 8086 I/O instructions:&#10;IN AL, 03H&#10;OUT 01H, AL">IN AL, 03H
+OUT 01H, AL</textarea>
+          </div>
+
+          <!-- Execution Controls Bar -->
+          <div class="controls-toolbar">
+            <button id="btnExecuteSingle" class="btn btn-primary" onclick="executeCurrentLine()">
+              <span class="icon">▶</span> Execute Line
+            </button>
+            <button id="btnStepNext" class="btn btn-secondary" onclick="stepNextProgramLine()">
+              <span class="icon">⏭</span> Step Next
+            </button>
+            <button id="btnRunProgram" class="btn btn-success" onclick="runFullProgram()">
+              <span class="icon">⚡</span> Run Program
+            </button>
+            <button id="btnResetSimulator" class="btn btn-outline" onclick="resetSimulatorState()">
+              <span class="icon">↺</span> Reset
+            </button>
+
+            <div class="speed-control">
+              <label for="execSpeed">Speed:</label>
+              <select id="execSpeed" class="select-sm">
+                <option value="800">Normal (800ms)</option>
+                <option value="400">Fast (400ms)</option>
+                <option value="1500">Slow (1.5s)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Educational AI / Diagnostic Assistant -->
+          <div class="ai-assistant-card mt-3" id="aiFeedbackBox">
+            <div class="ai-header">
+              <span class="ai-badge">🤖 8086 Pedagogical Assistant</span>
+              <span class="ai-status">Active Diagnostics</span>
+            </div>
+            <div class="ai-body" id="aiFeedbackContent">
+              Ready. Enter an instruction like <span class="code-pill">IN AL, 03H</span> or <span class="code-pill">OUT 01H, AL</span> to observe hardware bus cycles.
+            </div>
+          </div>
+
+          <!-- Intermediate Bus Cycle Visualization Flow -->
+          <div class="intermediate-state-card mt-3">
+            <div class="state-card-header">
+              <h4>Intermediate 8086 Bus Cycle Stages (T1–T4)</h4>
+              <span class="badge badge-primary" id="busCyclePhaseBadge">Quiescent Idle</span>
+            </div>
+            <div class="stepper-progress" id="busCycleStepper">
+              <div class="step-node active" id="stepNode1">
+                <div class="circle">1</div>
+                <div class="label">Fetch & Decode<br><span class="small-code">M/~IO=0</span></div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step-node" id="stepNode2">
+                <div class="circle">2</div>
+                <div class="label">Address Phase<br><span class="small-code">A15-A0 / ALE</span></div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step-node" id="stepNode3">
+                <div class="circle">3</div>
+                <div class="label">Control Strobe<br><span class="small-code">~RD / ~WR</span></div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step-node" id="stepNode4">
+                <div class="circle">4</div>
+                <div class="label">Peripheral Data<br><span class="small-code">D7-D0</span></div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step-node" id="stepNode5">
+                <div class="circle">5</div>
+                <div class="label">Latch & Finish<br><span class="small-code">AL / Device</span></div>
+              </div>
+            </div>
+            <div class="bus-detail-text mt-2" id="busCycleDetailText">
+              Select or step through an instruction to trace the 8086 bus interface timing and peripheral control signals.
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: CPU Register & Bus Interface Panel -->
+        <div class="sim-panel sim-right">
+          <div class="panel-header">
+            <h3>8086 CPU State</h3>
+            <div class="radix-toggle">
+              <button class="radix-btn active" data-radix="hex" onclick="setRadixMode('hex')">HEX</button>
+              <button class="radix-btn" data-radix="dec" onclick="setRadixMode('dec')">DEC</button>
+              <button class="radix-btn" data-radix="bin" onclick="setRadixMode('bin')">BIN</button>
+            </div>
+          </div>
+
+          <!-- Register Cards -->
+          <div class="registers-grid">
+            <div class="reg-box reg-ax">
+              <div class="reg-label">AX (16-bit Accumulator)</div>
+              <div class="reg-val" id="dispRegAX">0000H</div>
+              <div class="reg-sub">
+                <span>AH: <b id="dispRegAH">00H</b></span>
+                <span>AL: <b id="dispRegAL" class="highlight-val">00H</b></span>
+              </div>
+            </div>
+
+            <div class="reg-box">
+              <div class="reg-label">IP (Instruction Pointer)</div>
+              <div class="reg-val" id="dispRegIP">0100H</div>
+              <div class="reg-sub">Code Segment Offset</div>
+            </div>
+
+            <div class="reg-box">
+              <div class="reg-label">I/O Operation Counter</div>
+              <div class="reg-val highlight-cyan" id="dispIoCounter">0</div>
+              <div class="reg-sub">Bus Cycles Executed</div>
+            </div>
+          </div>
+
+          <!-- 8086 Status Flags -->
+          <div class="flags-card mt-3">
+            <div class="flags-header">Status Flags (PSW)</div>
+            <div class="flags-row">
+              <div class="flag-chip" id="flagZF" title="Zero Flag">ZF: <span>0</span></div>
+              <div class="flag-chip" id="flagSF" title="Sign Flag">SF: <span>0</span></div>
+              <div class="flag-chip" id="flagPF" title="Parity Flag">PF: <span>1</span></div>
+              <div class="flag-chip" id="flagCF" title="Carry Flag">CF: <span>0</span></div>
+              <div class="flag-chip" id="flagOF" title="Overflow Flag">OF: <span>0</span></div>
+            </div>
+          </div>
+
+          <!-- 8086 Bus Control Signals -->
+          <div class="bus-signals-card mt-3">
+            <div class="bus-header">
+              <span>8086 Bus Interface Signals</span>
+              <span class="badge badge-accent">Isolated I/O Mode</span>
+            </div>
+            <div class="signals-table">
+              <div class="sig-row">
+                <span class="sig-name">M/~IO</span>
+                <span class="sig-status" id="sigMIO">0 (I/O)</span>
+                <span class="sig-desc">Pin 28: Low selects Isolated I/O space</span>
+              </div>
+              <div class="sig-row">
+                <span class="sig-name">~RD</span>
+                <span class="sig-status" id="sigRD">1 (Inactive)</span>
+                <span class="sig-desc">Pin 32: Active-Low read strobe for IN</span>
+              </div>
+              <div class="sig-row">
+                <span class="sig-name">~WR</span>
+                <span class="sig-status" id="sigWR">1 (Inactive)</span>
+                <span class="sig-desc">Pin 29: Active-Low write strobe for OUT</span>
+              </div>
+              <div class="sig-row">
+                <span class="sig-name">ALE</span>
+                <span class="sig-status" id="sigALE">0 (Low)</span>
+                <span class="sig-desc">Pin 25: Address Latch Enable for 8282</span>
+              </div>
+              <div class="sig-row">
+                <span class="sig-name">~DEN</span>
+                <span class="sig-status" id="sigDEN">1 (High)</span>
+                <span class="sig-desc">Pin 26: Data Enable for 8286 transceiver</span>
+              </div>
+              <div class="sig-row">
+                <span class="sig-name">DT/~R</span>
+                <span class="sig-status" id="sigDTR">0 (Receive)</span>
+                <span class="sig-desc">Pin 27: 1=Transmit(OUT), 0=Receive(IN)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Execution Status Notification -->
+          <div class="sim-status-banner mt-3" id="simStatusBanner">
+            <span class="status-indicator-dot dot-idle"></span>
+            <span id="simStatusText">Ready for 8086 I/O execution.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM: Real-time Trace Bar on Simulator Page -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>Latest I/O Execution Trace</h3>
+          <div class="header-actions">
+            <button class="btn btn-outline btn-sm" onclick="switchTab('trace')">View Full Trace Table</button>
+            <button class="btn btn-secondary btn-sm" onclick="clearExecutionTrace()">Clear Trace</button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table" id="simMiniTraceTable">
+              <thead>
+                <tr>
+                  <th>Step</th>
+                  <th>Instruction</th>
+                  <th>Op</th>
+                  <th>Port</th>
+                  <th>Dir</th>
+                  <th>Reg Before</th>
+                  <th>Device Before</th>
+                  <th>Data</th>
+                  <th>Reg After</th>
+                  <th>Device After</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="simMiniTraceBody">
+                <tr>
+                  <td colspan="11" class="text-center text-muted">No instructions executed yet. Click 'Execute Line' or 'Run Program' above.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. PORT MAP TAB ==================== -->
+    <section id="tab-portmap" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 Port Mapping Configuration</h2>
+          <p class="text-muted">64KB Isolated I/O Space (0000H–FFFFH) & Address Decoding</p>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-primary btn-sm" onclick="openAddPortModal()">+ Add Custom Port</button>
+          <button class="btn btn-outline btn-sm" onclick="resetPortMapToDefaults()">Reset Default Map</button>
+          <button class="btn btn-secondary btn-sm" onclick="exportPortMapCSV()">Export CSV</button>
+        </div>
+      </div>
+
+      <!-- Educational Note on Isolated I/O vs Memory-Mapped I/O -->
+      <div class="alert-box alert-info mt-3">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-content">
+          <strong>Port-Mapped (Isolated) I/O vs. Memory-Mapped I/O in Intel 8086:</strong>
+          In Port-Mapped I/O, the 8086 microprocessor uses a separate 64KB I/O address space (<span class="code-pill">0000H – FFFFH</span>) accessed exclusively via dedicated <span class="code-pill">IN</span> and <span class="code-pill">OUT</span> instructions. During I/O cycles, the control line <span class="code-pill">M/~IO = 0</span>, ensuring that memory chip-select logic remains disabled while peripheral decoders (e.g. 74LS138) activate the appropriate I/O device.
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>Active Peripheral Port Map Table</h3>
+          <span class="badge badge-success">Address Range: 00H – 07H</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table" id="fullPortMapTable">
+              <thead>
+                <tr>
+                  <th>Port Address</th>
+                  <th>Hex / Dec</th>
+                  <th>Device Name</th>
+                  <th>Direction</th>
+                  <th>Current Value</th>
+                  <th>Default Value</th>
+                  <th>Status</th>
+                  <th>Hardware Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="fullPortMapBody">
+                <!-- Populated via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Decoder Explanation Card -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>Hardware Address Decoding Logic (74LS138 3-to-8 Decoder)</h3>
+        </div>
+        <div class="card-body">
+          <p>In standard 8086 peripheral interfacing, address lines <span class="code-pill">A2, A1, A0</span> are wired to the select inputs <span class="code-pill">C, B, A</span> of a 74LS138 decoder, while higher address lines <span class="code-pill">A7-A3</span> and control line <span class="code-pill">M/~IO</span> enable the decoder:</p>
+          <div class="code-display">
+ENABLE = (~G2A = M/~IO) AND (~G2B = A7 NOR A6 NOR A5 NOR A4 NOR A3) AND (G1 = VCC)
+Output: ~Y0 to ~Y7 generate individual Chip Select signals (~CS0 to ~CS7)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. VIRTUAL DEVICES TAB ==================== -->
+    <section id="tab-devices" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 Virtual I/O Devices</h2>
+          <p class="text-muted">Interactive Synthetic Hardware Components Connected to 8086 Ports</p>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-outline btn-sm" onclick="resetAllDevices()">Reset All Devices</button>
+        </div>
+      </div>
+
+      <div class="devices-grid mt-3">
+        
+        <!-- Device 1: Input Switch (Port 00H) -->
+        <div class="device-card" id="devCard00">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-input">INPUT</span>
+              <h4>Input Switch Bank</h4>
+            </div>
+            <span class="port-tag">Port 00H</span>
+          </div>
+          <div class="dev-body">
+            <div class="switches-container" id="dipSwitchGroup">
+              <!-- 8 toggle switches -->
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Value:</span>
+                <b id="switchValDisp" class="highlight-val">01H (00000001b)</b>
+              </div>
+              <div class="meta-row">
+                <span>Status:</span>
+                <span id="switchStatusDisp" class="badge badge-info">ACTIVE (1/8 ON)</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">8-bit DIP switch bank simulating external digital inputs to accumulator AL via <span class="code-pill">IN AL, 00H</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 2: LED Output (Port 01H) -->
+        <div class="device-card" id="devCard01">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-output">OUTPUT</span>
+              <h4>LED Output Bar</h4>
+            </div>
+            <span class="port-tag">Port 01H</span>
+          </div>
+          <div class="dev-body">
+            <div class="leds-container" id="ledDisplayGroup">
+              <!-- 8 glowing LEDs -->
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Value:</span>
+                <b id="ledValDisp" class="highlight-val">00H (00000000b)</b>
+              </div>
+              <div class="meta-row">
+                <span>Status:</span>
+                <span id="ledStatusDisp" class="badge badge-secondary">ALL OFF</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">8-channel active-high LED array driven by accumulator data via <span class="code-pill">OUT 01H, AL</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 3: 7-Segment Display (Port 02H) -->
+        <div class="device-card" id="devCard02">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-output">OUTPUT</span>
+              <h4>7-Segment Display</h4>
+            </div>
+            <span class="port-tag">Port 02H</span>
+          </div>
+          <div class="dev-body text-center">
+            <div class="seven-seg-container">
+              <svg id="svgSevenSeg" class="seven-seg-svg" viewBox="0 0 100 140" width="90" height="130">
+                <!-- Segment a -->
+                <polygon id="seg-a" points="20,10 80,10 70,20 30,20" class="seg-off"></polygon>
+                <!-- Segment b -->
+                <polygon id="seg-b" points="80,12 90,20 85,65 75,58 78,20" class="seg-off"></polygon>
+                <!-- Segment c -->
+                <polygon id="seg-c" points="85,75 90,120 80,128 78,118 75,82" class="seg-off"></polygon>
+                <!-- Segment d -->
+                <polygon id="seg-d" points="30,120 70,120 80,130 20,130" class="seg-off"></polygon>
+                <!-- Segment e -->
+                <polygon id="seg-e" points="10,120 20,118 25,82 15,75 10,120" class="seg-off"></polygon>
+                <!-- Segment f -->
+                <polygon id="seg-f" points="10,20 20,20 25,58 15,65 10,20" class="seg-off"></polygon>
+                <!-- Segment g -->
+                <polygon id="seg-g" points="25,66 75,66 70,74 30,74" class="seg-off"></polygon>
+                <!-- Decimal point dp -->
+                <circle id="seg-dp" cx="92" cy="130" r="5" class="seg-off"></circle>
+              </svg>
+              <div class="seven-seg-character" id="dispSegChar">0</div>
+            </div>
+            <div class="dev-meta mt-2">
+              <div class="meta-row">
+                <span>Latched Byte:</span>
+                <b id="segValDisp" class="highlight-val">00H</b>
+              </div>
+              <div class="meta-row">
+                <span>Display Status:</span>
+                <span id="segStatusDisp" class="badge badge-info">DISPLAYING '0'</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Common-Cathode numeric display receiving lower nibble hexadecimal scancodes via <span class="code-pill">OUT 02H, AL</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 4: Digital Sensor (Port 03H) -->
+        <div class="device-card" id="devCard03">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-input">INPUT</span>
+              <h4>Digital Sensor (ADC)</h4>
+            </div>
+            <span class="port-tag">Port 03H</span>
+          </div>
+          <div class="dev-body">
+            <div class="sensor-control-box">
+              <div class="slider-header">
+                <span>Sensor Transducer Level:</span>
+                <span id="sensorSliderValText" class="badge badge-primary">5AH (90°C)</span>
+              </div>
+              <input type="range" id="sensorSlider" min="0" max="255" value="90" class="range-slider" oninput="onSensorSliderChange(this.value)">
+              <div class="sensor-presets mt-2">
+                <button class="btn btn-xs btn-outline" onclick="setSensorPreset(0)">0°C (00H)</button>
+                <button class="btn btn-xs btn-outline" onclick="setSensorPreset(25)">25°C (19H)</button>
+                <button class="btn btn-xs btn-outline" onclick="setSensorPreset(90)">90°C (5AH)</button>
+                <button class="btn btn-xs btn-outline" onclick="setSensorPreset(255)">Max (FFH)</button>
+              </div>
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Value:</span>
+                <b id="sensorValDisp" class="highlight-val">5AH</b>
+              </div>
+              <div class="meta-row">
+                <span>Status:</span>
+                <span id="sensorStatusDisp" class="badge badge-info">READING: 5AH (90°C)</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Simulates an ADC transducer (e.g. LM35 temperature sensor) sampled via <span class="code-pill">IN AL, 03H</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 5: Keypad (Port 04H) -->
+        <div class="device-card" id="devCard04">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-input">INPUT</span>
+              <h4>4x4 Matrix Keypad</h4>
+            </div>
+            <span class="port-tag">Port 04H</span>
+          </div>
+          <div class="dev-body">
+            <div class="keypad-matrix">
+              <button class="key-btn" onclick="pressKeypadKey(1, '1')">1</button>
+              <button class="key-btn" onclick="pressKeypadKey(2, '2')">2</button>
+              <button class="key-btn" onclick="pressKeypadKey(3, '3')">3</button>
+              <button class="key-btn key-action" onclick="pressKeypadKey(10, 'A')">A</button>
+              
+              <button class="key-btn" onclick="pressKeypadKey(4, '4')">4</button>
+              <button class="key-btn" onclick="pressKeypadKey(5, '5')">5</button>
+              <button class="key-btn" onclick="pressKeypadKey(6, '6')">6</button>
+              <button class="key-btn key-action" onclick="pressKeypadKey(11, 'B')">B</button>
+              
+              <button class="key-btn" onclick="pressKeypadKey(7, '7')">7</button>
+              <button class="key-btn" onclick="pressKeypadKey(8, '8')">8</button>
+              <button class="key-btn" onclick="pressKeypadKey(9, '9')">9</button>
+              <button class="key-btn key-action" onclick="pressKeypadKey(12, 'C')">C</button>
+              
+              <button class="key-btn" onclick="pressKeypadKey(14, 'E')">*</button>
+              <button class="key-btn" onclick="pressKeypadKey(0, '0')">0</button>
+              <button class="key-btn" onclick="pressKeypadKey(15, 'F')">#</button>
+              <button class="key-btn key-action" onclick="pressKeypadKey(13, 'D')">D</button>
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Pressed Key:</span>
+                <b id="keypadKeyDisp" class="highlight-val">'3' (03H)</b>
+              </div>
+              <div class="meta-row">
+                <span>Status:</span>
+                <span id="keypadStatusDisp" class="badge badge-info">KEY PRESSED: '3'</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Matrix keypad encoder latching scancode byte into accumulator via <span class="code-pill">IN AL, 04H</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 6: Buzzer (Port 05H) -->
+        <div class="device-card" id="devCard05">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-output">OUTPUT</span>
+              <h4>Piezo Buzzer Alarm</h4>
+            </div>
+            <span class="port-tag">Port 05H</span>
+          </div>
+          <div class="dev-body text-center">
+            <div class="buzzer-visual-box" id="buzzerVisual">
+              <div class="buzzer-icon-wrap" id="buzzerSpeakerIcon">
+                🔔
+              </div>
+              <div class="buzzer-waves" id="buzzerWaves">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Control Byte:</span>
+                <b id="buzzerValDisp" class="highlight-val">00H</b>
+              </div>
+              <div class="meta-row">
+                <span>Acoustic State:</span>
+                <span id="buzzerStatusDisp" class="badge badge-secondary">MUTED / SILENT</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Acoustic transducer sounding 2.4 kHz tone when Bit 0 is high via <span class="code-pill">OUT 05H, AL</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 7: Motor Controller (Port 06H) -->
+        <div class="device-card" id="devCard06">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-output">OUTPUT</span>
+              <h4>PWM Motor Drive</h4>
+            </div>
+            <span class="port-tag">Port 06H</span>
+          </div>
+          <div class="dev-body text-center">
+            <div class="motor-dial-box">
+              <div class="motor-propeller" id="motorFan">
+                🌀
+              </div>
+              <div class="motor-rpm-gauge">
+                <span id="motorRpmText">0 RPM</span>
+                <small id="motorPwmText">0% PWM Duty</small>
+              </div>
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>PWM Byte:</span>
+                <b id="motorValDisp" class="highlight-val">00H</b>
+              </div>
+              <div class="meta-row">
+                <span>Status:</span>
+                <span id="motorStatusDisp" class="badge badge-secondary">MOTOR STOPPED</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Speed controller adjusting DC motor rotation (00H=0 RPM, FFH=3000 RPM) via <span class="code-pill">OUT 06H, AL</span>.</p>
+          </div>
+        </div>
+
+        <!-- Device 8: Status Register (Port 07H) -->
+        <div class="device-card" id="devCard07">
+          <div class="dev-header">
+            <div class="dev-title-wrap">
+              <span class="dev-badge badge-input">INPUT</span>
+              <h4>Status Handshaking Register</h4>
+            </div>
+            <span class="port-tag">Port 07H</span>
+          </div>
+          <div class="dev-body">
+            <div class="status-flags-chips" id="statusChipsGroup">
+              <!-- 8 clickable status flags: READY, BUSY, etc. -->
+            </div>
+            <div class="dev-meta mt-3">
+              <div class="meta-row">
+                <span>Status Word:</span>
+                <b id="statusRegValDisp" class="highlight-val">01H (READY)</b>
+              </div>
+              <div class="meta-row">
+                <span>Active Flags:</span>
+                <span id="statusRegFlagsDisp" class="badge badge-info">[READY]</span>
+              </div>
+            </div>
+            <p class="dev-desc mt-2">Handshaking status register read by 8086 during polling loops via <span class="code-pill">IN AL, 07H</span>.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 5. SAMPLE PROGRAMS TAB ==================== -->
+    <section id="tab-programs" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 Sample I/O Programs</h2>
+          <p class="text-muted">Verified Laboratory Programs from EC2201 Microprocessor Syllabus</p>
+        </div>
+      </div>
+
+      <div class="sample-programs-grid mt-3">
+        
+        <!-- Program 1 -->
+        <div class="program-card">
+          <div class="program-header">
+            <span class="badge badge-primary">PROGRAM 1</span>
+            <h3>Read Sensor → Display on LED</h3>
+          </div>
+          <div class="program-code">
+            <pre>IN AL, 03H   ; Read sensor reading from Port 03H
+OUT 01H, AL  ; Write accumulator AL value to LED Port 01H</pre>
+          </div>
+          <div class="program-desc">
+            <strong>Hardware Explanation:</strong> Reads the current 8-bit ambient temperature transducer reading from Port 03H into accumulator register AL, then latches the byte directly to the LED array at Port 01H.
+          </div>
+          <div class="program-actions">
+            <button class="btn btn-primary btn-sm" onclick="loadAndRunSample(1)">Load & Run</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(1); switchTab('simulator');">Open in Editor</button>
+          </div>
+        </div>
+
+        <!-- Program 2 -->
+        <div class="program-card">
+          <div class="program-header">
+            <span class="badge badge-primary">PROGRAM 2</span>
+            <h3>Read Switch → Trigger Buzzer</h3>
+          </div>
+          <div class="program-code">
+            <pre>IN AL, 00H   ; Read 8-bit DIP switch bank
+OUT 05H, AL  ; Output logic state to Piezo Buzzer at Port 05H</pre>
+          </div>
+          <div class="program-desc">
+            <strong>Hardware Explanation:</strong> Samples external DIP switches from Port 00H. If switch SW0 is closed (Bit 0 = 1), writing to Port 05H activates the piezoelectric alarm tone.
+          </div>
+          <div class="program-actions">
+            <button class="btn btn-primary btn-sm" onclick="loadAndRunSample(2)">Load & Run</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(2); switchTab('simulator');">Open in Editor</button>
+          </div>
+        </div>
+
+        <!-- Program 3 -->
+        <div class="program-card">
+          <div class="program-header">
+            <span class="badge badge-primary">PROGRAM 3</span>
+            <h3>Read Keypad → 7-Segment Display</h3>
+          </div>
+          <div class="program-code">
+            <pre>IN AL, 04H   ; Read encoded scancode from Keypad at Port 04H
+OUT 02H, AL  ; Output scancode to 7-Segment display Port 02H</pre>
+          </div>
+          <div class="program-desc">
+            <strong>Hardware Explanation:</strong> Scans the 4x4 matrix keypad encoder. The returned hex scancode in AL is then passed to Port 02H to display the pressed key digit on the 7-segment display.
+          </div>
+          <div class="program-actions">
+            <button class="btn btn-primary btn-sm" onclick="loadAndRunSample(3)">Load & Run</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(3); switchTab('simulator');">Open in Editor</button>
+          </div>
+        </div>
+
+        <!-- Program 4 -->
+        <div class="program-card">
+          <div class="program-header">
+            <span class="badge badge-primary">PROGRAM 4</span>
+            <h3>Read Sensor → Motor PWM Controller</h3>
+          </div>
+          <div class="program-code">
+            <pre>IN AL, 03H   ; Sample environmental sensor at Port 03H
+OUT 06H, AL  ; Drive DC Motor speed proportional to sensor</pre>
+          </div>
+          <div class="program-desc">
+            <strong>Hardware Explanation:</strong> Demonstrates closed-loop process control. As the transducer value rises, the 8086 drives a higher PWM duty cycle to the motor drive at Port 06H.
+          </div>
+          <div class="program-actions">
+            <button class="btn btn-primary btn-sm" onclick="loadAndRunSample(4)">Load & Run</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(4); switchTab('simulator');">Open in Editor</button>
+          </div>
+        </div>
+
+        <!-- Program 5 -->
+        <div class="program-card">
+          <div class="program-header">
+            <span class="badge badge-primary">PROGRAM 5</span>
+            <h3>Read Status Register → LED Indicator</h3>
+          </div>
+          <div class="program-code">
+            <pre>IN AL, 07H   ; Sample Peripheral Handshake Flags from Port 07H
+OUT 01H, AL  ; Display peripheral flags on LED indicator bar</pre>
+          </div>
+          <div class="program-desc">
+            <strong>Hardware Explanation:</strong> Simulates peripheral bus status polling. Reads READY, BUSY, and ERROR flag bits into AL and displays them immediately across the 8 LEDs.
+          </div>
+          <div class="program-actions">
+            <button class="btn btn-primary btn-sm" onclick="loadAndRunSample(5)">Load & Run</button>
+            <button class="btn btn-outline btn-sm" onclick="loadSampleProgram(5); switchTab('simulator');">Open in Editor</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 6. I/O TRACE TAB ==================== -->
+    <section id="tab-trace" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 Step-by-Step I/O Execution Trace</h2>
+          <p class="text-muted">Chronological Audit Log of Bus Transfers, Port Signals, and Accumulator Transitions</p>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-outline btn-sm" onclick="exportTraceCSV()">Export Trace (CSV)</button>
+          <button class="btn btn-outline btn-sm" onclick="exportTraceJSON()">Export (JSON)</button>
+          <button class="btn btn-danger btn-sm" onclick="clearExecutionTrace()">Clear Trace</button>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <div class="filter-group">
+            <input type="text" id="traceSearchInput" class="input-sm" placeholder="Search instruction, port, data..." oninput="filterTraceTable()">
+            <select id="traceStatusFilter" class="select-sm" onchange="filterTraceTable()">
+              <option value="ALL">All Statuses</option>
+              <option value="SUCCESS">SUCCESS only</option>
+              <option value="ERROR">ERROR only</option>
+            </select>
+          </div>
+          <span class="badge badge-info" id="traceTotalBadge">0 Records</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table" id="fullTraceTable">
+              <thead>
+                <tr>
+                  <th>Step</th>
+                  <th>Instruction</th>
+                  <th>Operation</th>
+                  <th>Port</th>
+                  <th>Direction</th>
+                  <th>Register Before</th>
+                  <th>Device Before</th>
+                  <th>Data Transferred</th>
+                  <th>Register After</th>
+                  <th>Device After</th>
+                  <th>Status</th>
+                  <th>Hardware Explanation</th>
+                </tr>
+              </thead>
+              <tbody id="fullTraceBody">
+                <tr>
+                  <td colspan="12" class="text-center text-muted">Execution trace is empty. Run instructions in the Simulator to record I/O bus cycles.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 7. TEST CASES TAB ==================== -->
+    <section id="tab-testcases" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>Automated Test Verification Suite</h2>
+          <p class="text-muted">10 Normal Test Cases + 6 Edge/Fault Cases with Reproducible Synthetic Data</p>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-success btn-sm" id="btnRunAllTestsUI" onclick="runAllTestsUI()">
+            <span class="icon">🧪</span> Run All Test Cases (16)
+          </button>
+        </div>
+      </div>
+
+      <!-- Test Summary Metrics -->
+      <div class="grid-4 mt-3">
+        <div class="kpi-card">
+          <div class="kpi-title">Total Tests</div>
+          <div class="kpi-val" id="testKpiTotal">16</div>
+          <div class="kpi-sub">10 Normal + 6 Fault</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Passed</div>
+          <div class="kpi-val text-success" id="testKpiPassed">16</div>
+          <div class="kpi-sub" id="testKpiRate">100% Success Rate</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Failed</div>
+          <div class="kpi-val text-danger" id="testKpiFailed">0</div>
+          <div class="kpi-sub">Zero Regressions</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Verification Status</div>
+          <div class="kpi-val highlight-cyan" id="testKpiStatus">VERIFIED</div>
+          <div class="kpi-sub">Reproducible Logic</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="test-progress-bar-wrap mt-3">
+        <div class="test-progress-bar" id="testProgressBar" style="width: 100%;"></div>
+      </div>
+
+      <!-- Normal Test Cases Table -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <div class="header-title-wrap">
+            <span class="badge badge-success">SECTION 1</span>
+            <h3>Normal I/O Test Cases (TC01 – TC10)</h3>
+          </div>
+          <span class="badge badge-info">10 Tests Required</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table" id="normalTestsTable">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Test Case Name</th>
+                  <th>Assembly Input</th>
+                  <th>Initial State</th>
+                  <th>Expected Output</th>
+                  <th>Actual Output</th>
+                  <th>Result</th>
+                  <th>Explanation</th>
+                </tr>
+              </thead>
+              <tbody id="normalTestsBody">
+                <!-- Populated via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fault / Edge Test Cases Table -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <div class="header-title-wrap">
+            <span class="badge badge-danger">SECTION 2</span>
+            <h3>Edge & Fault Test Cases (FC01 – FC06)</h3>
+          </div>
+          <span class="badge badge-info">6 Tests Configured</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table" id="faultTestsTable">
+              <thead>
+                <tr>
+                  <th>Fault ID</th>
+                  <th>Fault Scenario</th>
+                  <th>Erroneous Input</th>
+                  <th>Expected Fault Response</th>
+                  <th>Actual Simulator Response</th>
+                  <th>Result</th>
+                  <th>Safety & Diagnostic Rationale</th>
+                </tr>
+              </thead>
+              <tbody id="faultTestsBody">
+                <!-- Populated via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 8. LOGIC / TRUTH TABLE TAB ==================== -->
+    <section id="tab-logic" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>8086 I/O Control Logic & Truth Tables</h2>
+          <p class="text-muted">Digital Bus Interface Control Signals, Address Decoding, and Data Flow Models</p>
+        </div>
+      </div>
+
+      <!-- Control Signal Truth Table -->
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>8086 I/O Bus Control Truth Table</h3>
+          <span class="badge badge-primary">Minimum Mode Bus Signals</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Instruction</th>
+                  <th>M/~IO</th>
+                  <th>~RD</th>
+                  <th>~WR</th>
+                  <th>ALE</th>
+                  <th>DT/~R</th>
+                  <th>Port Valid</th>
+                  <th>Direction Valid</th>
+                  <th>Resulting Bus Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>IN AL, port</b></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill pulse">Pulse</span></td>
+                  <td><span class="val-pill low">0 (Recv)</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="badge badge-success">READ (Device → AL)</span></td>
+                </tr>
+                <tr>
+                  <td><b>IN AL, port</b></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill pulse">Pulse</span></td>
+                  <td><span class="val-pill low">0 (Recv)</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="badge badge-danger">ERROR (Direction Mismatch)</span></td>
+                </tr>
+                <tr>
+                  <td><b>OUT port, AL</b></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill pulse">Pulse</span></td>
+                  <td><span class="val-pill high">1 (Xmit)</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="badge badge-success">WRITE (AL → Device)</span></td>
+                </tr>
+                <tr>
+                  <td><b>OUT port, AL</b></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="val-pill pulse">Pulse</span></td>
+                  <td><span class="val-pill high">1 (Xmit)</span></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td><span class="badge badge-danger">ERROR (Direction Mismatch)</span></td>
+                </tr>
+                <tr>
+                  <td><b>IN / OUT unmapped</b></td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td>X</td>
+                  <td>X</td>
+                  <td><span class="val-pill pulse">Pulse</span></td>
+                  <td>X</td>
+                  <td><span class="val-pill low">0</span></td>
+                  <td>X</td>
+                  <td><span class="badge badge-danger">ERROR (Port Not Mapped / High-Z)</span></td>
+                </tr>
+                <tr>
+                  <td><b>Memory Access (MOV)</b></td>
+                  <td><span class="val-pill high">1</span></td>
+                  <td>0/1</td>
+                  <td>0/1</td>
+                  <td>Pulse</td>
+                  <td>0/1</td>
+                  <td>X</td>
+                  <td>X</td>
+                  <td><span class="badge badge-secondary">MEMORY CYCLE (I/O Inactive)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Animated Data Flow Diagram -->
+      <div class="grid-2 mt-4">
+        <div class="card">
+          <div class="card-header">
+            <h3>OUT Instruction Data Flow (CPU → Device)</h3>
+          </div>
+          <div class="card-body">
+            <div class="flow-diagram-box">
+              <div class="flow-node">
+                <div class="node-title">CPU Accumulator</div>
+                <div class="node-desc">Register AL (e.g. 5AH)</div>
+              </div>
+              <div class="flow-arrow flow-right">
+                <span>D7–D0 Data Bus</span>
+                <span>~WR = 0 Active</span>
+              </div>
+              <div class="flow-node">
+                <div class="node-title">I/O Port Decoder</div>
+                <div class="node-desc">74LS138 (~CS Line)</div>
+              </div>
+              <div class="flow-arrow flow-right">
+                <span>Output Latch Strobe</span>
+              </div>
+              <div class="flow-node highlight-node">
+                <div class="node-title">Output Device</div>
+                <div class="node-desc">LED / Buzzer / Motor</div>
+              </div>
+            </div>
+            <p class="mt-3 small text-muted">
+              Data originates in accumulator AL. Control bus asserts <span class="code-pill">M/~IO = 0</span> and <span class="code-pill">~WR = 0</span>. Peripheral latches data on rising edge of write strobe.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>IN Instruction Data Flow (Device → CPU)</h3>
+          </div>
+          <div class="card-body">
+            <div class="flow-diagram-box">
+              <div class="flow-node highlight-node">
+                <div class="node-title">Input Device</div>
+                <div class="node-desc">Sensor / Switch / Keypad</div>
+              </div>
+              <div class="flow-arrow flow-right">
+                <span>3-State Buffer (74LS244)</span>
+              </div>
+              <div class="flow-node">
+                <div class="node-title">I/O Port Decoder</div>
+                <div class="node-desc">Address Select (A7-A0)</div>
+              </div>
+              <div class="flow-arrow flow-right">
+                <span>D7–D0 Data Bus</span>
+                <span>~RD = 0 Active</span>
+              </div>
+              <div class="flow-node">
+                <div class="node-title">CPU Accumulator</div>
+                <div class="node-desc">Register AL Updated</div>
+              </div>
+            </div>
+            <p class="mt-3 small text-muted">
+              Input peripheral places sensed byte onto data bus when <span class="code-pill">~RD = 0</span> is asserted. CPU latches bus data into accumulator AL at T4.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 74LS138 Decoder Truth Table -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>74LS138 3-to-8 Decoder Truth Table for Ports 00H–07H</h3>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Port Address</th>
+                  <th>A2</th>
+                  <th>A1</th>
+                  <th>A0</th>
+                  <th>~Y0 (~CS0)</th>
+                  <th>~Y1 (~CS1)</th>
+                  <th>~Y2 (~CS2)</th>
+                  <th>~Y3 (~CS3)</th>
+                  <th>~Y4 (~CS4)</th>
+                  <th>~Y5 (~CS5)</th>
+                  <th>~Y6 (~CS6)</th>
+                  <th>~Y7 (~CS7)</th>
+                  <th>Selected Device</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>00H</td><td>0</td><td>0</td><td>0</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>Input Switch</td></tr>
+                <tr><td>01H</td><td>0</td><td>0</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>LED Output</td></tr>
+                <tr><td>02H</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>7-Segment Display</td></tr>
+                <tr><td>03H</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>1</td><td>1</td><td>Digital Sensor</td></tr>
+                <tr><td>04H</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>1</td><td>Keypad</td></tr>
+                <tr><td>05H</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>1</td><td>Buzzer</td></tr>
+                <tr><td>06H</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>1</td><td>Motor Controller</td></tr>
+                <tr><td>07H</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td><b class="text-danger">0</b></td><td>Status Register</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 9. RESULTS TAB ==================== -->
+    <section id="tab-results" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>Simulation Results & Analytics Dashboard</h2>
+          <p class="text-muted">Verification Metrics, Instruction Frequency, and Execution Statistics</p>
+        </div>
+      </div>
+
+      <!-- Analytics KPI Row -->
+      <div class="grid-4 mt-3">
+        <div class="kpi-card">
+          <div class="kpi-title">Success Rate</div>
+          <div class="kpi-val text-success" id="resSuccessRate">100.0%</div>
+          <div class="kpi-sub">16/16 Test Cases Passed</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">IN (Read) Cycles</div>
+          <div class="kpi-val highlight-cyan" id="resInCount">10</div>
+          <div class="kpi-sub">Input Port Accesses</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">OUT (Write) Cycles</div>
+          <div class="kpi-val highlight-purple" id="resOutCount">8</div>
+          <div class="kpi-sub">Output Port Accesses</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Fault Traps Caught</div>
+          <div class="kpi-val text-warning" id="resFaultCount">6</div>
+          <div class="kpi-sub">Bus Violations Handled</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid-2 mt-4">
+        <!-- SVG Chart 1: Test Results Distribution -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Test Case Pass / Fail Distribution</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <svg viewBox="0 0 400 220" class="svg-chart" id="chartPassFail">
+                <!-- Bar 1: Normal Tests -->
+                <rect x="60" y="30" width="80" height="150" fill="#10b981" rx="4"></rect>
+                <text x="100" y="20" fill="#10b981" text-anchor="middle" font-weight="bold" font-size="12">10 Pass (100%)</text>
+                <text x="100" y="200" fill="#cbd5e1" text-anchor="middle" font-size="11">Normal Tests</text>
+
+                <!-- Bar 2: Fault Tests -->
+                <rect x="220" y="70" width="80" height="110" fill="#38bdf8" rx="4"></rect>
+                <text x="260" y="60" fill="#38bdf8" text-anchor="middle" font-weight="bold" font-size="12">6 Pass (100%)</text>
+                <text x="260" y="200" fill="#cbd5e1" text-anchor="middle" font-size="11">Fault Tests</text>
+
+                <!-- Axis -->
+                <line x1="30" y1="180" x2="370" y2="180" stroke="#475569" stroke-width="2"></line>
+              </svg>
+            </div>
+            <p class="small text-muted text-center mt-2">Zero test failures across all 16 predefined and synthetic test cases.</p>
+          </div>
+        </div>
+
+        <!-- SVG Chart 2: Instruction Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <h3>I/O Operation Frequency Breakdown</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <svg viewBox="0 0 400 220" class="svg-chart" id="chartOpBreakdown">
+                <!-- Pie/Donut Chart Simulation -->
+                <circle cx="150" cy="110" r="70" fill="none" stroke="#1e293b" stroke-width="30"></circle>
+                <circle cx="150" cy="110" r="70" fill="none" stroke="#38bdf8" stroke-width="30" stroke-dasharray="170 440" stroke-dashoffset="0"></circle>
+                <circle cx="150" cy="110" r="70" fill="none" stroke="#818cf8" stroke-width="30" stroke-dasharray="136 440" stroke-dashoffset="-170"></circle>
+                <circle cx="150" cy="110" r="70" fill="none" stroke="#fbbf24" stroke-width="30" stroke-dasharray="85 440" stroke-dashoffset="-306"></circle>
+                <circle cx="150" cy="110" r="70" fill="none" stroke="#f43f5e" stroke-width="30" stroke-dasharray="50 440" stroke-dashoffset="-391"></circle>
+                <text x="150" y="115" fill="#f8fafc" text-anchor="middle" font-weight="bold" font-size="16">100%</text>
+
+                <!-- Legend -->
+                <rect x="260" y="45" width="12" height="12" fill="#38bdf8" rx="2"></rect>
+                <text x="280" y="55" fill="#cbd5e1" font-size="11">IN Reads (39%)</text>
+
+                <rect x="260" y="75" width="12" height="12" fill="#818cf8" rx="2"></rect>
+                <text x="280" y="85" fill="#cbd5e1" font-size="11">OUT Writes (31%)</text>
+
+                <rect x="260" y="105" width="12" height="12" fill="#fbbf24" rx="2"></rect>
+                <text x="280" y="115" fill="#cbd5e1" font-size="11">MOV Register (19%)</text>
+
+                <rect x="260" y="135" width="12" height="12" fill="#f43f5e" rx="2"></rect>
+                <text x="280" y="145" fill="#cbd5e1" font-size="11">Fault Traps (11%)</text>
+              </svg>
+            </div>
+            <p class="small text-muted text-center mt-2">Distribution of instructions executed during verification suite runs.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generated Matplotlib Diagram Showcase -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>Generated High-Resolution Engineering Diagrams</h3>
+          <span class="badge badge-accent">Exported Assets in screenshots/</span>
+        </div>
+        <div class="card-body">
+          <div class="grid-3">
+            <div class="screenshot-item">
+              <h5>Bus Timing Diagram (T1–T4)</h5>
+              <img src="screenshots/bus_timing_diagram.png" alt="8086 Bus Timing Diagram" class="screenshot-img" onerror="this.src='https://placehold.co/600x400/1e293b/38bdf8?text=Bus+Timing+Diagram';">
+              <p class="small text-muted mt-1">Simulated T-states showing ALE, M/~IO, ~RD, and ~WR strobes.</p>
+            </div>
+            <div class="screenshot-item">
+              <h5>Hardware Interfacing Architecture</h5>
+              <img src="screenshots/system_architecture.png" alt="8086 Interfacing Architecture" class="screenshot-img" onerror="this.src='https://placehold.co/600x400/1e293b/818cf8?text=System+Architecture';">
+              <p class="small text-muted mt-1">Interfacing model showing 8086 CPU, 74LS138 decoder, and 8 peripherals.</p>
+            </div>
+            <div class="screenshot-item">
+              <h5>Test Verification Metrics</h5>
+              <img src="screenshots/test_results_summary.png" alt="Test Results Summary" class="screenshot-img" onerror="this.src='https://placehold.co/600x400/1e293b/10b981?text=Test+Results+Summary';">
+              <p class="small text-muted mt-1">Matplotlib chart showing 100% pass rate across all 16 test cases.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 10. DOCUMENTATION TAB ==================== -->
+    <section id="tab-docs" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>Comprehensive Project Documentation</h2>
+          <p class="text-muted">EC2201 Unit V Academic Specification (Sections A through Q)</p>
+        </div>
+      </div>
+
+      <div class="docs-layout mt-3">
+        <!-- Docs Sidebar Table of Contents -->
+        <div class="docs-sidebar">
+          <h4>Table of Contents</h4>
+          <ul class="docs-nav-list">
+            <li><a href="#doc-obj">A. Project Objective</a></li>
+            <li><a href="#doc-prob">B. Real-World Problem</a></li>
+            <li><a href="#doc-sol">C. Proposed Solution</a></li>
+            <li><a href="#doc-scope">D. Scope of Implementation</a></li>
+            <li><a href="#doc-assump">E. Documented Assumptions</a></li>
+            <li><a href="#doc-input">F. Input & Data Formats</a></li>
+            <li><a href="#doc-portmap">G. Port Mapping Architecture</a></li>
+            <li><a href="#doc-inout">H. 8086 IN/OUT Bus Concepts</a></li>
+            <li><a href="#doc-arch">I. System Architecture</a></li>
+            <li><a href="#doc-devices">J. Virtual Peripherals</a></li>
+            <li><a href="#doc-simproc">K. Simulation Workflow</a></li>
+            <li><a href="#doc-normal">L. Normal Test Suite</a></li>
+            <li><a href="#doc-fault">M. Fault Detection Suite</a></li>
+            <li><a href="#doc-results">N. Results Summary</a></li>
+            <li><a href="#doc-limits">O. Assumptions & Limitations</a></li>
+            <li><a href="#doc-future">P. Future Enhancements</a></li>
+            <li><a href="#doc-refs">Q. Academic References</a></li>
+          </ul>
+        </div>
+
+        <!-- Docs Main Content Body -->
+        <div class="docs-body">
+          <div class="doc-section" id="doc-obj">
+            <h3>A. Project Objective</h3>
+            <p>The objective of this project is to develop an interactive, reproducible software simulation of Intel 8086 Port-Mapped (Isolated) I/O interfacing to fulfill the academic requirements of <b>EC2201 – Microprocessor and I/O Interfacing (Unit V)</b> for student <b>HARIHARAN MUTHU M (Section A)</b>. The system allows students to visually explore port mapping, <span class="code-pill">IN</span> and <span class="code-pill">OUT</span> instructions, intermediate bus cycles, virtual peripherals, and fault conditions.</p>
+          </div>
+
+          <div class="doc-section" id="doc-prob">
+            <h3>B. Real-World Problem</h3>
+            <p>In undergraduate engineering laboratories, physical microprocessor kits (such as 8086 trainer boards with 8255 PPIs) have significant pedagogical barriers:</p>
+            <ul>
+              <li>Bus signals like <span class="code-pill">M/~IO</span>, <span class="code-pill">~RD</span>, and <span class="code-pill">~WR</span> oscillate at megahertz frequencies, making them impossible to trace without expensive mixed-signal logic analyzers.</li>
+              <li>Wiring errors on breadboards easily result in short circuits, damaged ICs, or address bus floating.</li>
+              <li>Students struggle to grasp how the CPU executes isolated I/O versus memory-mapped I/O.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-sol">
+            <h3>C. Proposed Solution</h3>
+            <p>A full-stack interactive educational simulator that models the physical hardware behavior of the 8086 microprocessor's I/O bus interface. It executes 8086 assembly instructions, simulates 8 distinct synthetic I/O peripherals, visualizes intermediate bus cycles, updates CPU accumulator registers (AL/AH/AX), and provides detailed execution audit logs.</p>
+          </div>
+
+          <div class="doc-section" id="doc-scope">
+            <h3>D. Scope of Implementation</h3>
+            <p>The simulator covers:</p>
+            <ul>
+              <li>Isolated (Port-Mapped) I/O addressing (8-bit direct ports 00H–FFH and 16-bit registers).</li>
+              <li>Instructions: <span class="code-pill">IN AL, port</span>, <span class="code-pill">IN AX, port</span>, <span class="code-pill">OUT port, AL</span>, <span class="code-pill">OUT port, AX</span>, <span class="code-pill">MOV</span>, <span class="code-pill">NOP</span>, <span class="code-pill">HLT</span>.</li>
+              <li>8 Virtual I/O peripherals: DIP Switch, LED Bar, 7-Segment Display, ADC Sensor, Keypad, Piezo Buzzer, Motor Drive, and Status Register.</li>
+              <li>16 automated reproducible test scenarios (10 normal + 6 edge/fault cases).</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-assump">
+            <h3>E. Documented Assumptions</h3>
+            <ol>
+              <li>The project is an educational software simulation; no physical 8086 processor is connected.</li>
+              <li>Virtual ports represent simulated I/O hardware peripherals.</li>
+              <li>Port values are represented using standard hexadecimal notation (e.g. 03H, 5AH).</li>
+              <li>Data byte values strictly range from 00H to FFH (0 to 255 decimal).</li>
+              <li>The simulator focuses specifically on the Unit V Port-Mapped I/O concept.</li>
+              <li>Only supported instructions (IN, OUT, MOV, NOP, HLT) are executed by the core.</li>
+              <li>Reproducible synthetic data is utilized for automated verification.</li>
+              <li>Peripheral physical behaviors (e.g. motor RPM, sensor temp) are modeled deterministically.</li>
+              <li>The simulation does not emulate interrupt vectors or DMA controllers.</li>
+              <li>The tool is safe, non-destructive, and resilient to arbitrary student input.</li>
+            </ol>
+          </div>
+
+          <div class="doc-section" id="doc-input">
+            <h3>F. Input & Data Formats</h3>
+            <p>The simulator accepts standard Intel assembly syntax:</p>
+            <ul>
+              <li><b>Port Addresses:</b> Hexadecimal format with 'H' suffix (e.g. <span class="code-pill">03H</span>, <span class="code-pill">00H</span>) or standard C notation (<span class="code-pill">0x03</span>).</li>
+              <li><b>Immediate Constants:</b> 8-bit hex (e.g. <span class="code-pill">5AH</span>, <span class="code-pill">0AAH</span>) or decimal integers.</li>
+              <li><b>Assembly Programs:</b> One instruction per line. Comments prefixed by semicolon (<span class="code-pill">; comment</span>) are ignored.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-portmap">
+            <h3>G. Port Mapping Architecture</h3>
+            <p>The 8086 reserves 64KB of I/O space. In this tool, ports <span class="code-pill">00H – 07H</span> are pre-configured to represent laboratory interfacing hardware:</p>
+            <table class="data-table">
+              <thead>
+                <tr><th>Port</th><th>Device Name</th><th>Direction</th><th>Default Value</th><th>Hardware Function</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>00H</td><td>Input Switch</td><td>INPUT</td><td>01H</td><td>8-bit DIP switch bank for logic levels</td></tr>
+                <tr><td>01H</td><td>LED Output</td><td>OUTPUT</td><td>00H</td><td>8-channel LED array indicator</td></tr>
+                <tr><td>02H</td><td>7-Segment Display</td><td>OUTPUT</td><td>00H</td><td>Common-cathode 7-segment display</td></tr>
+                <tr><td>03H</td><td>Digital Sensor</td><td>INPUT</td><td>5AH</td><td>8-bit ADC ambient temperature sensor</td></tr>
+                <tr><td>04H</td><td>Keypad</td><td>INPUT</td><td>03H</td><td>4x4 matrix keypad encoder</td></tr>
+                <tr><td>05H</td><td>Buzzer</td><td>OUTPUT</td><td>00H</td><td>Piezoelectric acoustic alarm transducer</td></tr>
+                <tr><td>06H</td><td>Motor Controller</td><td>OUTPUT</td><td>00H</td><td>PWM DC motor speed drive</td></tr>
+                <tr><td>07H</td><td>Status Register</td><td>INPUT</td><td>01H</td><td>Handshaking flags (READY, BUSY, etc.)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="doc-section" id="doc-inout">
+            <h3>H. 8086 IN/OUT Bus Concepts</h3>
+            <p>In Intel 8086 architecture:</p>
+            <ul>
+              <li><b>IN Instruction:</b> <span class="code-pill">IN AL, port</span> transfers an 8-bit byte from the peripheral addressed by <span class="code-pill">port</span> into accumulator register <span class="code-pill">AL</span>. The CPU asserts <span class="code-pill">M/~IO = 0</span>, <span class="code-pill">~RD = 0</span>, and <span class="code-pill">DT/~R = 0</span> (Receive).</li>
+              <li><b>OUT Instruction:</b> <span class="code-pill">OUT port, AL</span> transfers an 8-bit byte from <span class="code-pill">AL</span> to the peripheral at <span class="code-pill">port</span>. The CPU asserts <span class="code-pill">M/~IO = 0</span>, <span class="code-pill">~WR = 0</span>, and <span class="code-pill">DT/~R = 1</span> (Transmit).</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-arch">
+            <h3>I. System Architecture</h3>
+            <p>The simulator architecture consists of five decoupled layers:</p>
+            <ol>
+              <li><b>Presentation Layer:</b> Responsive web GUI with SVG 7-segment display, glowing LEDs, audio synthesizer, and charts.</li>
+              <li><b>Parser Layer:</b> Validates syntax, decodes mnemonics, and generates friendly educational error diagnostics.</li>
+              <li><b>Core 8086 Engine:</b> Simulates CPU registers, status flags, and 5-stage bus cycle state transitions.</li>
+              <li><b>Virtual Device Layer:</b> Emulates 8 peripheral interfaces with direction enforcement and realistic state logic.</li>
+              <li><b>Verification & Test Layer:</b> Executes reproducible synthetic test suites and generates analytics.</li>
+            </ol>
+          </div>
+
+          <div class="doc-section" id="doc-devices">
+            <h3>J. Virtual Peripherals</h3>
+            <p>Detailed hardware modeling is provided for each device:</p>
+            <ul>
+              <li><b>Input Switch:</b> Individual bit toggles modifying the byte value in real time.</li>
+              <li><b>LED Bar:</b> Active-high illumination with glowing CSS effects reflecting accumulator bitmasks.</li>
+              <li><b>7-Segment Display:</b> Full 7-segment common-cathode decoding displaying hex characters 0–F.</li>
+              <li><b>Digital Sensor:</b> Senses temperature from 0°C (00H) to 127°C (7FH) and higher.</li>
+              <li><b>Keypad:</b> Encodes key press matrix coordinates into hex scancodes.</li>
+              <li><b>Buzzer:</b> Synthesizes realistic 2.4kHz audio pulses using the HTML5 Web Audio API.</li>
+              <li><b>Motor Controller:</b> Computes PWM duty cycle percentage and motor RPM (0–3000 RPM) with animated spinning fan.</li>
+              <li><b>Status Register:</b> Decodes handshaking bit flags: READY, BUSY, ERROR, TX_EMPTY, RX_FULL, OVERRUN, PARITY_ERR, IRQ_PENDING.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-simproc">
+            <h3>K. Simulation Workflow</h3>
+            <p>When an instruction executes:</p>
+            <ol>
+              <li><b>Fetch & Decode:</b> Opcode is parsed; control signal <span class="code-pill">M/~IO</span> is set to 0.</li>
+              <li><b>Address Latch (T1):</b> Port address is placed on bus lines A7–A0; <span class="code-pill">ALE</span> is pulsed high.</li>
+              <li><b>Bus Control Strobe (T2–T3):</b> Active-low <span class="code-pill">~RD</span> or <span class="code-pill">~WR</span> strobe is asserted.</li>
+              <li><b>Data Transfer (T3–T4):</b> Peripheral drives or latches data across lines D7–D0.</li>
+              <li><b>Register/Peripheral Update (T4):</b> Accumulator AL or target peripheral updates its internal state.</li>
+              <li><b>Trace Log Entry:</b> Full snapshot is recorded into the audit trail table.</li>
+            </ol>
+          </div>
+
+          <div class="doc-section" id="doc-normal">
+            <h3>L. Normal Test Suite (TC01–TC10)</h3>
+            <p>The verification suite validates reading and writing across all 8 peripheral ports, multi-instruction sequential pipelines, and data transfer from sensor to LED via the CPU accumulator with 100% precision.</p>
+          </div>
+
+          <div class="doc-section" id="doc-fault">
+            <h3>M. Fault Detection Suite (FC01–FC06)</h3>
+            <p>The system traps illegal operations gracefully:</p>
+            <ul>
+              <li><b>FC01:</b> Unmapped port address (e.g. IN AL, FFH) → Error: Port not mapped (High-Z).</li>
+              <li><b>FC02:</b> OUT to input-only sensor → Error: Device does not accept output.</li>
+              <li><b>FC03:</b> IN from output-only LED → Error: Device does not support read.</li>
+              <li><b>FC04:</b> Invalid mnemonic syntax → Error: Unknown instruction.</li>
+              <li><b>FC05:</b> Constant out of 8-bit range → Error: Value exceeds 00H–FFH limit.</li>
+              <li><b>FC06:</b> Inverted operand order → Error: IN requires accumulator first.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-results">
+            <h3>N. Results Summary</h3>
+            <p>The test runner reports 16 of 16 tests passing (100% pass rate). All bus control signals, register transitions, and peripheral updates match the physical behavioral specifications of the Intel 8086 microcomputer architecture.</p>
+          </div>
+
+          <div class="doc-section" id="doc-limits">
+            <h3>O. Assumptions & Limitations</h3>
+            <p>The simulation prioritizes educational clarity for Unit V I/O interfacing. It intentionally excludes physical propagation delays, analog slew rates, hardware interrupts (INTR/NMI), and direct memory access (DMA).</p>
+          </div>
+
+          <div class="doc-section" id="doc-future">
+            <h3>P. Future Enhancements</h3>
+            <ul>
+              <li>Support for 8255 Programmable Peripheral Interface (PPI) Mode 0, 1, and 2 simulation.</li>
+              <li>8259 Programmable Interrupt Controller (PIC) vectoring.</li>
+              <li>Hardware-in-the-loop interfacing via Web Serial API to Arduino or FPGA boards.</li>
+              <li>Side-by-side comparison mode between Port-Mapped and Memory-Mapped I/O.</li>
+            </ul>
+          </div>
+
+          <div class="doc-section" id="doc-refs">
+            <h3>Q. Academic References</h3>
+            <ol>
+              <li><b>Intel Corporation.</b> (1979). <i>The 8086 Family User's Manual</i>. Santa Clara, CA: Intel Literature Department.</li>
+              <li><b>Hall, Douglas V.</b> (2005). <i>Microprocessors and Interfacing: Programming and Hardware</i> (2nd ed.). Tata McGraw-Hill Education.</li>
+              <li><b>Ray, A. K., & Bhurchandi, K. M.</b> (2012). <i>Advanced Microprocessors and Peripherals: Architecture, Programming and Interfacing</i> (3rd ed.). McGraw Hill India.</li>
+              <li><b>Gaonkar, Ramesh S.</b> (2007). <i>Microprocessor Architecture, Programming, and Applications with the 8085/8086</i>. Penram International Publishing.</li>
+              <li><b>Liu, Yu-Cheng, & Gibson, Glenn A.</b> (1986). <i>Microcomputer Systems: The 8086/8088 Family: Architecture, Programming and Design</i> (2nd ed.). Prentice-Hall.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 11. ABOUT PROJECT TAB ==================== -->
+    <section id="tab-about" class="tab-pane">
+      <div class="section-header-bar">
+        <div>
+          <h2>About Project & Author Information</h2>
+          <p class="text-muted">College Assignment & Laboratory Submission Details</p>
+        </div>
+      </div>
+
+      <div class="about-card mt-3">
+        <div class="about-hero">
+          <div class="author-avatar">HM</div>
+          <div class="author-details">
+            <h3>HARIHARAN MUTHU M</h3>
+            <div class="author-sub">Student • Section A</div>
+            <div class="author-dept">Department of Electronics and Communication Engineering</div>
+          </div>
+        </div>
+
+        <div class="about-meta-grid mt-4">
+          <div class="about-item">
+            <span class="about-label">Project Title:</span>
+            <span class="about-val highlight">8086 Port-Mapped I/O Learning Tool</span>
+          </div>
+          <div class="about-item">
+            <span class="about-label">Course / Subject Code:</span>
+            <span class="about-val">EC2201 – Microprocessor and I/O Interfacing</span>
+          </div>
+          <div class="about-item">
+            <span class="about-label">Syllabus Unit:</span>
+            <span class="about-val">Unit V – 8086 Microprocessor and I/O Interfacing</span>
+          </div>
+          <div class="about-item">
+            <span class="about-label">Project Type:</span>
+            <span class="about-val">Educational Software Simulation & Interfacing Prototype</span>
+          </div>
+          <div class="about-item">
+            <span class="about-label">Registration Date:</span>
+            <span class="about-val">08 Sept 2026</span>
+          </div>
+          <div class="about-item">
+            <span class="about-label">Academic Year:</span>
+            <span class="about-val">2026 – 2027</span>
+          </div>
+        </div>
+
+        <div class="divider mt-4"></div>
+
+        <div class="about-statement mt-4">
+          <h4>Project Declaration & Purpose</h4>
+          <p>
+            This project is submitted as an educational learning solution to visualize and demonstrate the principles of <b>Port-Mapped I/O (Isolated I/O)</b> on the Intel 8086 16-bit microprocessor. The application adheres to all academic deliverables: reproducible test cases, verifiable truth tables, CPU register models, intermediate bus state tracking, diagnostic error trapping, and professional engineering documentation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Guided 3-5 Min College Presentation Demo Modal -->
+  <div class="modal-overlay" id="demoModalOverlay">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div class="demo-step-badge" id="demoStepBadge">Step 1 of 14</div>
+        <h3 id="demoStepTitle">Welcome to 8086 Port-Mapped I/O Demo</h3>
+        <button class="modal-close-btn" onclick="closeGuidedDemo()">&times;</button>
+      </div>
+      <div class="modal-body" id="demoStepBody">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btnDemoPrev" onclick="prevDemoStep()">Previous</button>
+        <button class="btn btn-secondary" onclick="closeGuidedDemo()">Exit Demo</button>
+        <button class="btn btn-primary" id="btnDemoNext" onclick="nextDemoStep()">Next Step &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Port Modal -->
+  <div class="modal-overlay" id="addPortModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Add / Edit Virtual I/O Port</h3>
+        <button class="modal-close-btn" onclick="closeAddPortModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="customPortAddr">Port Address (Hex, e.g. 08H or 10H):</label>
+          <input type="text" id="customPortAddr" class="form-control" placeholder="08H" value="08H">
+        </div>
+        <div class="form-group mt-2">
+          <label for="customDeviceName">Device Name:</label>
+          <input type="text" id="customDeviceName" class="form-control" placeholder="Optocoupler Relay">
+        </div>
+        <div class="form-group mt-2">
+          <label for="customDeviceDir">Direction:</label>
+          <select id="customDeviceDir" class="form-control">
+            <option value="INPUT">INPUT (IN instruction only)</option>
+            <option value="OUTPUT" selected>OUTPUT (OUT instruction only)</option>
+            <option value="INOUT">BIDIRECTIONAL (IN & OUT)</option>
+          </select>
+        </div>
+        <div class="form-group mt-2">
+          <label for="customDeviceVal">Default Initial Value (Hex, 00H-FFH):</label>
+          <input type="text" id="customDeviceVal" class="form-control" placeholder="00H" value="00H">
+        </div>
+        <div class="form-group mt-2">
+          <label for="customDeviceDesc">Hardware Description:</label>
+          <input type="text" id="customDeviceDesc" class="form-control" placeholder="External relay driver interface">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeAddPortModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCustomPort()">Save Port</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-brand">8086 Port-Mapped I/O Learning Tool</div>
+        <p class="footer-desc">EC2201 Microprocessor and I/O Interfacing • Unit V Simulation Project</p>
+      </div>
+      <div class="footer-col text-right">
+        <div>Student: <b>HARIHARAN MUTHU M</b> (Sec A)</div>
+        <div class="text-muted small">Registered: 08 Sept 2026 • Reproducible Educational Software</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
